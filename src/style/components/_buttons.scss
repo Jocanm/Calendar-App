@@ -1,0 +1,8 @@
+.btn{
+    @apply px-2 py-1 rounded-sm;
+
+    &-primary{
+        @apply bg-blue-600 hover:bg-blue-700 text-white;
+    }
+}
+
