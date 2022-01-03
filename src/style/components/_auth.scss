@@ -1,16 +1,21 @@
-.auth__main-screen{
-    padding:20%;
-}
-
-.auth__input-container{
-    @apply grid grid-cols-1 gap-2;
+.auth__main-auth-screen{
+    // padding:10%;
+    @apply flex justify-center items-center w-full h-screen bg-blue-600
 }
 
 .auth__form{
-    box-shadow: .0rem .0rem 1rem #000;
-    @apply grid grid-cols-1 gap-2;
+    box-shadow: .0rem .0rem .3rem #000;
+    @apply flex flex-col justify-start rounded-md w-full md:w-2/3 lg:w-1/2 h-2/3 py-6 px-16 bg-white;
 
     & h2{
         @apply text-2xl text-center font-bold;
     }
+
+    & button{
+        @apply sm:w-1/2 rounded-lg
+    }
+}
+
+.auth__input-container{
+    @apply grid grid-cols-1 gap-2 mt-16 mb-10;
 }

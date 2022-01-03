@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { PrivateLayout } from './layout/PrivateLayout'
 import { Login } from './pages/auth/Login'
 import { Register } from './pages/auth/Register'
 import { Index } from './pages/Index'
@@ -9,7 +10,9 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Index />} />
+                <Route path="/" element={<PrivateLayout/>}>
+                    <Route path="" element={<Index />} />
+                </Route>
                 <Route path="/auth/login" element={<Login />} />
                 <Route path="/auth/register" element={<Register />} />
                 <Route

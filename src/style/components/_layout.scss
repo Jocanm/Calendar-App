@@ -1,0 +1,17 @@
+.layout__navbar{
+    @apply bg-gray-700 flex justify-between px-3 py-2 items-center text-gray-200 ;
+
+    & h2{
+        @apply font-bold text-lg
+    }
+
+    & button{
+        @apply border-red-700 border text-red-700;
+
+        &:hover{
+            @apply border-red-800 text-red-800
+        }
+    }
+
+    box-shadow: .0rem .1rem .5rem gray;
+}
