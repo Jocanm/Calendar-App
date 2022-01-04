@@ -1,0 +1,37 @@
+.modal__container {
+    @apply px-4 pt-2 pb-3 w-96;
+
+    & h2 {
+        @apply text-3xl font-bold mb-4 pb-4;
+        border-bottom: 1px solid gray;
+    }
+
+    & textarea {
+        @apply w-full border border-gray-400 outline-none rounded-md p-2;
+        resize: none;
+    }
+
+    & span {
+        @apply font-semibold opacity-90;
+    }
+}
+
+.modal_form {
+    @apply flex flex-col gap-2;
+}
+
+.modal__title-notes {
+    @apply flex flex-col gap-2 my-2;
+}
+
+.modal__save-button{
+    @apply border-2 border-blue-400;
+
+    & span{
+        @apply text-blue-400;
+    }
+
+    & i{
+        @apply text-blue-400;
+    }
+}

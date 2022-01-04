@@ -5,6 +5,7 @@ import { CalendarEvent } from '../components/calendar/CalendarEvent';
 import { messages } from '../helpers/calendar-messages';
 import 'moment/locale/es'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { CalendarModal } from '../components/calendar/CalendarModal';
 
 moment.locale('es')
 const localizer = momentLocalizer(moment)
@@ -70,6 +71,8 @@ export const Index = () => {
                 onView={onViewChange}
                 view={lastView}
             />
+
+            <CalendarModal/>
         </div>
     )
 }
