@@ -1,23 +1,24 @@
-import { Dialog } from '@mui/material';
 import React, { useState } from 'react'
-import Modal from 'react-modal';
-import { Input, InputLabel } from '../Input';
+import moment from 'moment';
+import DateTimePicker from 'react-datetime-picker';
+import { Dialog } from '@mui/material';
+import { InputLabel } from '../Input';
 
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-    },
-};
-
-Modal.setAppElement('#root');
+const now = moment().minutes(0).seconds(0).add(1, "hours")
+const nowPlus1 = now.clone().add(1, "hours")
 
 export const CalendarModal = () => {
 
+    const [dateStart, setDateStart] = useState(now.toDate())
+    const [dateEnd, setDateEnd] = useState(nowPlus1.toDate())
+
+    const handleStartDateChange = (event) => {
+        setDateStart(event)
+    }
+
+    const handleEndDateChange = (event) => {
+        setDateEnd(event)
+    }
 
     return (
         <Dialog
@@ -26,20 +27,19 @@ export const CalendarModal = () => {
         >
             <div className="modal__container">
                 <h2>Nuevo evento</h2>
-                <form className="modal_form">
-                    <InputLabel
-                        name="startDate"
-                        placeholder="Fecha Inicio"
-                        type="text"
-                        size="small"
-                        label="Fecha y hora de inicio"
+                <form className="modal__form">
+                    <span>Fecha inicio</span>
+                    <DateTimePicker
+                        onChange={handleStartDateChange}
+                        value={dateStart}
+                        className="modal__custom-input"
                     />
-                    <InputLabel
-                        name="endDate"
-                        placeholder="Fecha Fin"
-                        type="text"
-                        size="small"
-                        label="Fecha y hora de fin"
+                    <span>Fecha Fin</span>
+                    <DateTimePicker
+                        onChange={handleEndDateChange}
+                        value={dateEnd}
+                        className="modal__custom-input"
+                        minDate={ dateStart }
                     />
                     <div className="modal__title-notes">
                         <InputLabel
@@ -51,6 +51,7 @@ export const CalendarModal = () => {
                         />
                         <h3 className="text-xs -mt-1 mb-2">Descripcion breve</h3>
                         <textarea
+                            className="modal__custom-input"
                             type="text"
                             placeholder="Notas"
                             rows="5"

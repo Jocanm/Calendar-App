@@ -6,17 +6,16 @@
         border-bottom: 1px solid gray;
     }
 
-    & textarea {
-        @apply w-full border border-gray-400 outline-none rounded-md p-2;
-        resize: none;
-    }
-
     & span {
         @apply font-semibold opacity-90;
     }
 }
 
-.modal_form {
+.modal__custom-input{
+    @apply w-full border border-gray-400 outline-none rounded-md p-2;
+}
+
+.modal__form {
     @apply flex flex-col gap-2;
 }
 
@@ -34,4 +33,15 @@
     & i{
         @apply text-blue-400;
     }
+}
+
+// DATE PICKER
+
+.react-datetime-picker input:focus{
+    outline:none;
+}
+
+.react-datetime-picker__wrapper{
+    display: flex;
+    border:0 solid gray !important;
 }
