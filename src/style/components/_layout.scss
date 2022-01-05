@@ -6,10 +6,10 @@
     }
 
     & button{
-        @apply border-red-700 border text-red-700;
+        @apply border-red-800 border text-red-800;
 
         &:hover{
-            @apply border-red-800 text-red-800
+            @apply border-red-700 text-red-700
         }
     }
 

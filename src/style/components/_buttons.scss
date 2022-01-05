@@ -6,3 +6,8 @@
     }
 }
 
+.button__floating{
+    @apply fixed rounded-full bg-blue-500 hover:bg-blue-700 text-white bottom-5 right-10 px-4 py-3 opacity-80;
+    border-radius:100%;
+}
+

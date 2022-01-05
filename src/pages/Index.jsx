@@ -3,9 +3,13 @@ import moment from 'moment'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import { CalendarEvent } from '../components/calendar/CalendarEvent';
 import { messages } from '../helpers/calendar-messages';
-import 'moment/locale/es'
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { useDispatch } from 'react-redux';
 import { CalendarModal } from '../components/calendar/CalendarModal';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import 'moment/locale/es'
+import { uiOpenModal } from '../redux/actions/ui';
+import { eventSetActive } from '../redux/actions/events';
+import { ButtonFab } from '../components/calendar/ButtonFab';
 
 moment.locale('es')
 const localizer = momentLocalizer(moment)
@@ -25,14 +29,16 @@ const myEventsList = [
 
 export const Index = () => {
 
+    const dispatch = useDispatch()
+
     const [lastView,setLastView] = useState(localStorage.getItem('lastView') || 'month');
 
     const onDoubleClick = (e) => {
-        console.log(e);
+        dispatch(uiOpenModal())
     }
 
     const onSelectEvent = (e) => {
-        console.log(e);
+        dispatch(eventSetActive(e))
     }
 
     const onViewChange = (e) => {
@@ -71,7 +77,7 @@ export const Index = () => {
                 onView={onViewChange}
                 view={lastView}
             />
-
+            <ButtonFab/>
             <CalendarModal/>
         </div>
     )

@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
 import moment from 'moment';
+import toast from 'react-hot-toast'
 import DateTimePicker from 'react-datetime-picker';
 import { Dialog } from '@mui/material';
 import { InputLabel } from '../Input';
-
+import { validateForm } from '../../helpers/validateForm';
+import { useSelector, useDispatch } from 'react-redux';
+import {uiCloseModal} from '../../redux/actions/ui'
 const now = moment().minutes(0).seconds(0).add(1, "hours")
 const nowPlus1 = now.clone().add(1, "hours")
 
 export const CalendarModal = () => {
+
+    const {modalOpen:open} = useSelector(state=>state.ui)
+    const dispatch = useDispatch()
 
     const [dateStart, setDateStart] = useState(now.toDate())
     const [dateEnd, setDateEnd] = useState(nowPlus1.toDate())
@@ -19,7 +25,7 @@ export const CalendarModal = () => {
         end: nowPlus1.toDate()
     });
 
-    const { title, notes } = formValues;
+    const { title, notes, start, end } = formValues;
 
     const handleInputChange = (e) => {
         setFormValues({
@@ -40,19 +46,21 @@ export const CalendarModal = () => {
         setDateEnd(e)
         setFormValues({
             ...formValues,
-            start: e
+            end: e
         })
     }
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
-        console.log(formValues);
+        if(validateForm(start,end,title)){
+            toast.success("Correcto")
+        }
     }
 
     return (
         <Dialog
-            open={true}
-            onClose={() => console.log("Cerrando")}
+            open={open}
+            onClose={() => {dispatch(uiCloseModal())}}
         >
             <div className="modal__container">
                 <h2>Nuevo evento</h2>
@@ -86,6 +94,7 @@ export const CalendarModal = () => {
                         />
                         <h3 className="text-xs -mt-1 mb-2">Descripcion breve</h3>
                         <textarea
+                            required
                             className="modal__custom-input"
                             type="text"
                             placeholder="Notas"
