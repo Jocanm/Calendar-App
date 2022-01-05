@@ -12,12 +12,41 @@ export const CalendarModal = () => {
     const [dateStart, setDateStart] = useState(now.toDate())
     const [dateEnd, setDateEnd] = useState(nowPlus1.toDate())
 
-    const handleStartDateChange = (event) => {
-        setDateStart(event)
+    const [formValues, setFormValues] = useState({
+        title: "Evento",
+        notes: "",
+        start: now.toDate(),
+        end: nowPlus1.toDate()
+    });
+
+    const { title, notes } = formValues;
+
+    const handleInputChange = (e) => {
+        setFormValues({
+            ...formValues,
+            [e.target.name]: e.target.value
+        })
     }
 
-    const handleEndDateChange = (event) => {
-        setDateEnd(event)
+    const handleStartDateChange = (e) => {
+        setDateStart(e)
+        setFormValues({
+            ...formValues,
+            start: e
+        })
+    }
+
+    const handleEndDateChange = (e) => {
+        setDateEnd(e)
+        setFormValues({
+            ...formValues,
+            start: e
+        })
+    }
+
+    const handleSubmitForm = (e) => {
+        e.preventDefault()
+        console.log(formValues);
     }
 
     return (
@@ -27,19 +56,23 @@ export const CalendarModal = () => {
         >
             <div className="modal__container">
                 <h2>Nuevo evento</h2>
-                <form className="modal__form">
+                <form
+                    onSubmit={handleSubmitForm}
+                    className="modal__form">
                     <span>Fecha inicio</span>
                     <DateTimePicker
+                        name="startDate"
                         onChange={handleStartDateChange}
                         value={dateStart}
                         className="modal__custom-input"
                     />
                     <span>Fecha Fin</span>
                     <DateTimePicker
+                        name="endDate"
                         onChange={handleEndDateChange}
                         value={dateEnd}
                         className="modal__custom-input"
-                        minDate={ dateStart }
+                        minDate={dateStart}
                     />
                     <div className="modal__title-notes">
                         <InputLabel
@@ -48,6 +81,8 @@ export const CalendarModal = () => {
                             type="text"
                             size="small"
                             label="Titulo y notas"
+                            value={title}
+                            onChange={handleInputChange}
                         />
                         <h3 className="text-xs -mt-1 mb-2">Descripcion breve</h3>
                         <textarea
@@ -56,6 +91,8 @@ export const CalendarModal = () => {
                             placeholder="Notas"
                             rows="5"
                             name="notes"
+                            value={notes}
+                            onChange={handleInputChange}
                         ></textarea>
                         <h3 className="text-xs -mt-1">Información adicional</h3>
                     </div>

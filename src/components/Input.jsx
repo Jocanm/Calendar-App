@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 
 
-export const Input = ({ name, placeholder, required = false, defaultValue, type = "text", variant = "outlined", multiline = false, maxRows = 4, size = "normal", className = "" }) => {
+export const Input = ({ name, placeholder, required = true, defaultValue, type = "text", variant = "outlined", multiline = false, maxRows = 4, size = "normal", className = "" }) => {
     return (
         <TextField
             name={name}
@@ -19,7 +19,7 @@ export const Input = ({ name, placeholder, required = false, defaultValue, type 
     )
 }
 
-export const InputLabel = ({ name, placeholder, required = false, defaultValue, type = "text", variant = "outlined", multiline = false, maxRows = 4, size = "normal", className = "", label = "" }) => {
+export const InputLabel = ({ name, placeholder, required = true, defaultValue, type = "text", variant = "outlined", multiline = false, maxRows = 4, size = "normal", className = "", label = "",value,onChange = () => {} }) => {
     return (
         <label className="flex flex-col gap-1">
             <span>{label}</span>
@@ -34,13 +34,15 @@ export const InputLabel = ({ name, placeholder, required = false, defaultValue, 
                 maxRows={maxRows}
                 size={size}
                 className={className}
+                value={value}
+                onChange={onChange}
             // InputLabelProps={{ shrink: true }}
             />
         </label>
     )
 }
 
-export const InputValue = ({ name, placeholder, required = false, value, type = "text", variant = "outlined", multiline = false, maxRows = 4, size = "normal", className = "", onChange = () => { } }) => {
+export const InputValue = ({ name, placeholder, required = true, value, type = "text", variant = "outlined", multiline = false, maxRows = 4, size = "normal", className = "", onChange = () => { } }) => {
     return (
         <TextField
             name={name}
