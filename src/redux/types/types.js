@@ -5,5 +5,6 @@ export const types = {
 
     eventSetActive: '[Event] Set Active',
     eventAddNew: '[Event] Add New',
+    eventCleanActiveNote: '[Event] Clean Active Note',
 
 }

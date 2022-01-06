@@ -6,26 +6,40 @@ import { Dialog } from '@mui/material';
 import { InputLabel } from '../Input';
 import { validateForm } from '../../helpers/validateForm';
 import { useSelector, useDispatch } from 'react-redux';
-import {uiCloseModal} from '../../redux/actions/ui'
+import { uiCloseModal } from '../../redux/actions/ui'
+import { eventAddNew, eventCleanActiveNote } from '../../redux/actions/events';
+import { useEffect } from 'react';
+
 const now = moment().minutes(0).seconds(0).add(1, "hours")
 const nowPlus1 = now.clone().add(1, "hours")
+const initEventValues = {
+    title: "",
+    notes: "",
+    start: now.toDate(),
+    end: nowPlus1.toDate()
+}
+// TENGO QUE VER 16. AÑADIR NUEVO EVENTO
 
 export const CalendarModal = () => {
 
-    const {modalOpen:open} = useSelector(state=>state.ui)
     const dispatch = useDispatch()
+    const { modalOpen: open } = useSelector(state => state.ui)
+    const { activeEvent } = useSelector(state => state.calendar)
 
     const [dateStart, setDateStart] = useState(now.toDate())
     const [dateEnd, setDateEnd] = useState(nowPlus1.toDate())
 
-    const [formValues, setFormValues] = useState({
-        title: "Evento",
-        notes: "",
-        start: now.toDate(),
-        end: nowPlus1.toDate()
-    });
+    const [formValues, setFormValues] = useState(initEventValues);
 
     const { title, notes, start, end } = formValues;
+
+    useEffect(() => {
+        if (activeEvent) {
+            setFormValues(activeEvent)
+        } else {
+            setFormValues(initEventValues)
+        }
+    }, [activeEvent])
 
     const handleInputChange = (e) => {
         setFormValues({
@@ -50,17 +64,28 @@ export const CalendarModal = () => {
         })
     }
 
+    const handleCloseModal = () => {
+        dispatch(uiCloseModal())
+        dispatch(eventCleanActiveNote())
+    }
+
     const handleSubmitForm = (e) => {
         e.preventDefault()
-        if(validateForm(start,end,title)){
+        if (validateForm(start, end, title)) {
             toast.success("Correcto")
+            dispatch(eventAddNew({
+                ...formValues,
+                id: new Date().getTime()
+            }))
+            dispatch(uiCloseModal())
+            setFormValues(initEventValues)
         }
     }
 
     return (
         <Dialog
             open={open}
-            onClose={() => {dispatch(uiCloseModal())}}
+            onClose={handleCloseModal}
         >
             <div className="modal__container">
                 <h2>Nuevo evento</h2>
