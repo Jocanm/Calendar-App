@@ -1,5 +1,5 @@
 .modal__container {
-    @apply px-4 pt-2 pb-3 w-96;
+    @apply px-4 pt-2 pb-3 w-auto md:w-96 overflow-x-hidden;
 
     & h2 {
         @apply text-3xl font-bold mb-4 pb-4;
@@ -11,7 +11,7 @@
     }
 }
 
-.modal__custom-input{
+.modal__custom-input {
     @apply w-full border border-gray-400 outline-none rounded-md p-2;
 }
 
@@ -23,25 +23,38 @@
     @apply flex flex-col gap-2 my-2;
 }
 
-.modal__save-button{
-    @apply border-2 border-blue-400;
+.modal__save-button {
+    @apply border-2 border-blue-400 w-full;
 
-    & span{
+    & span, i {
         @apply text-blue-400;
     }
 
-    & i{
-        @apply text-blue-400;
+}
+
+.modal__delete-button {
+    @apply border-2 border-red-700 w-full;
+
+    & span, i{
+        @apply text-red-700;
+    }
+}
+
+.modal__btn-container {
+    @apply flex flex-col justify-center items-center md:flex-row gap-1;
+
+    & button:hover{
+        box-shadow: 0rem 1px .2rem gray;
     }
 }
 
 // DATE PICKER
 
-.react-datetime-picker input:focus{
-    outline:none;
+.react-datetime-picker input:focus {
+    outline: none;
 }
 
-.react-datetime-picker__wrapper{
+.react-datetime-picker__wrapper {
     display: flex;
-    border:0 solid gray !important;
+    border: 0 solid gray !important;
 }

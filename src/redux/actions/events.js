@@ -19,3 +19,16 @@ export const eventCleanActiveNote = () => {
         type:types.eventCleanActiveNote
     }
 }
+
+export const eventUpdate = (event) => {
+    return {
+        type:types.eventUpdate,
+        payload:event
+    }
+}
+
+export const eventDelete = () =>{
+    return {
+        type:types.eventDeleted
+    }
+}

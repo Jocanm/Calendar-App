@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import moment from 'moment';
 import toast from 'react-hot-toast'
 import DateTimePicker from 'react-datetime-picker';
@@ -7,8 +7,9 @@ import { InputLabel } from '../Input';
 import { validateForm } from '../../helpers/validateForm';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../redux/actions/ui'
-import { eventAddNew, eventCleanActiveNote } from '../../redux/actions/events';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { eventAddNew, eventCleanActiveNote, eventUpdate } from '../../redux/actions/events';
+import { DeleteButtonFab } from './DeleteButtonFab';
 
 const now = moment().minutes(0).seconds(0).add(1, "hours")
 const nowPlus1 = now.clone().add(1, "hours")
@@ -39,6 +40,8 @@ export const CalendarModal = () => {
         } else {
             setFormValues(initEventValues)
         }
+        setDateStart(now.toDate())
+        setDateEnd(nowPlus1.toDate())
     }, [activeEvent])
 
     const handleInputChange = (e) => {
@@ -66,20 +69,28 @@ export const CalendarModal = () => {
 
     const handleCloseModal = () => {
         dispatch(uiCloseModal())
-        dispatch(eventCleanActiveNote())
+        setTimeout(() => {
+            dispatch(eventCleanActiveNote())
+            setFormValues(initEventValues)
+        }, [100])
     }
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
-        if (validateForm(start, end, title)) {
-            toast.success("Correcto")
+        if (!validateForm(start, end, title)) {
+            return;
+        }
+        if (activeEvent) {
+            dispatch(eventUpdate(formValues))
+            toast.success("Evento actualizado")
+        } else {
             dispatch(eventAddNew({
                 ...formValues,
                 id: new Date().getTime()
             }))
-            dispatch(uiCloseModal())
-            setFormValues(initEventValues)
+            toast.success("Evento creado con exito")
         }
+        handleCloseModal()
     }
 
     return (
@@ -88,7 +99,7 @@ export const CalendarModal = () => {
             onClose={handleCloseModal}
         >
             <div className="modal__container">
-                <h2>Nuevo evento</h2>
+                <h2>{!activeEvent ? "Nuevo evento" : "Actualizar Evento"}</h2>
                 <form
                     onSubmit={handleSubmitForm}
                     className="modal__form">
@@ -96,19 +107,20 @@ export const CalendarModal = () => {
                     <DateTimePicker
                         name="startDate"
                         onChange={handleStartDateChange}
-                        value={dateStart}
+                        value={activeEvent ? formValues.start : dateStart}
                         className="modal__custom-input"
                     />
                     <span>Fecha Fin</span>
                     <DateTimePicker
                         name="endDate"
                         onChange={handleEndDateChange}
-                        value={dateEnd}
+                        value={activeEvent ? formValues.end : dateEnd}
                         className="modal__custom-input"
                         minDate={dateStart}
                     />
                     <div className="modal__title-notes">
                         <InputLabel
+                            required={false}
                             name="title"
                             placeholder="Titulo del evento"
                             type="text"
@@ -130,10 +142,13 @@ export const CalendarModal = () => {
                         ></textarea>
                         <h3 className="text-xs -mt-1">Información adicional</h3>
                     </div>
-                    <button className="modal__save-button btn">
-                        <i className="fas fa-save mr-2"></i>
-                        <span>Guardar</span>
-                    </button>
+                    <div className="modal__btn-container">
+                        <DeleteButtonFab />
+                        <button className="modal__save-button btn">
+                            <i className="fas fa-save mr-2"></i>
+                            <span>Guardar</span>
+                        </button>
+                    </div>
                 </form>
             </div>
         </Dialog>
