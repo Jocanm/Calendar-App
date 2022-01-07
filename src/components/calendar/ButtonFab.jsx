@@ -1,14 +1,12 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { eventCleanActiveNote } from '../../redux/actions/events'
 import { uiOpenModal } from '../../redux/actions/ui'
 
 export const ButtonFab = () => {
 
     const dispatch = useDispatch()
 
-    const handleNewEvent = (e) => {
-        dispatch(eventCleanActiveNote())
+    const handleNewEvent = () => {
         dispatch(uiOpenModal())
     }
 

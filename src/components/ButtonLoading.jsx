@@ -1,7 +1,7 @@
 import ReactLoading from 'react-loading'
 
 
-const ButtonLoading = ({ disabled, loading, text, className = "" }) => {
+const ButtonLoading = ({ disabled, loading, text, className = "",children }) => {
     return (
         <button
             disabled={(disabled || loading) && true}

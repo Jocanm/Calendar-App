@@ -8,7 +8,7 @@ import { CalendarModal } from '../components/calendar/CalendarModal';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'moment/locale/es'
 import { uiOpenModal } from '../redux/actions/ui';
-import { eventSetActive } from '../redux/actions/events';
+import { eventCleanActiveNote, eventSetActive } from '../redux/actions/events';
 import { ButtonFab } from '../components/calendar/ButtonFab';
 
 moment.locale('es')
@@ -17,16 +17,18 @@ const localizer = momentLocalizer(moment)
 export const Index = () => {
 
     const dispatch = useDispatch()
-    const { events:eventsList } = useSelector(state => state.calendar)
+    const { events: eventsList } = useSelector(state => state.calendar)
     const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month');
 
     const onDoubleClick = (e) => {
+        dispatch(eventSetActive(e))
         dispatch(uiOpenModal())
     }
     
-    const onSelectEvent = (e) => {
-        dispatch(eventSetActive(e))
-    }
+
+    const handleSelectSlot = () =>{
+        dispatch(eventCleanActiveNote())
+    }   
 
     const onViewChange = (e) => {
         localStorage.setItem("lastView", e)
@@ -35,11 +37,11 @@ export const Index = () => {
 
     const eventStyleGetter = (event, start, end, isSelected) => {
         const style = {
-            backgroundColor: '#367cf7',
+            backgroundColor: '#f98fe9',
             borderRadius: '0px',
             opacity: 0.8,
             display: 'block',
-            color: 'white'
+            color: 'white',
         }
 
         return {
@@ -59,8 +61,10 @@ export const Index = () => {
                 components={{
                     event: CalendarEvent
                 }}
+                onSelectSlot={ handleSelectSlot }
+                selectable={true}
                 onDoubleClickEvent={onDoubleClick}
-                onSelectEvent={onSelectEvent}
+                // onSelectEvent={onSelectEvent}
                 onView={onViewChange}
                 view={lastView}
             />

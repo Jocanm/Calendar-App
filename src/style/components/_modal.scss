@@ -21,6 +21,10 @@
 
 .modal__title-notes {
     @apply flex flex-col gap-2 my-2;
+
+    & textarea{
+        resize: none;
+    }
 }
 
 .modal__save-button {

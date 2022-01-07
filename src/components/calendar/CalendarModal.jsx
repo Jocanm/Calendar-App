@@ -19,7 +19,6 @@ const initEventValues = {
     start: now.toDate(),
     end: nowPlus1.toDate()
 }
-// TENGO QUE VER 16. AÑADIR NUEVO EVENTO
 
 export const CalendarModal = () => {
 
@@ -116,7 +115,7 @@ export const CalendarModal = () => {
                         onChange={handleEndDateChange}
                         value={activeEvent ? formValues.end : dateEnd}
                         className="modal__custom-input"
-                        minDate={dateStart}
+                        minDate={activeEvent ? formValues.start : dateStart}
                     />
                     <div className="modal__title-notes">
                         <InputLabel
