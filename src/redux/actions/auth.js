@@ -3,7 +3,7 @@ import { fetchSinToken } from "../../helpers/fetch"
 import { toastStyle } from "../../helpers/toastStyle";
 import { types } from "../types/types";
 import { uiFinishLoading, uiStartLoading } from "./ui";
-
+// test
 export const startLogin = ({email,password}) =>{
 
     return async(dispatch) => {
