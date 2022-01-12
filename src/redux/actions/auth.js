@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { fetchSinToken } from "../../helpers/fetch"
+import { fetchConToken, fetchSinToken } from "../../helpers/fetch"
 import { toastStyle } from "../../helpers/toastStyle";
 import { types } from "../types/types";
 import { uiFinishLoading, uiStartLoading } from "./ui";
@@ -59,7 +59,42 @@ export const startRegister = ({name,email,password}) => {
 
 }   
 
-const login = (user) => ({
-    type:types.authLogin,
-    payload:user
-})
+export const startChecking = () => {
+
+    return async(dispatch) => {
+        const res = await fetchConToken("auth/new");
+
+        const body = await res.json();
+
+        if(!body.ok){
+            dispatch(notAuthenticated())
+            localStorage.removeItem('token')
+            localStorage.removeItem('token-init-date')
+        }
+
+        
+        else{
+            const {token,id,name,email} = body.user;
+            localStorage.setItem('token',token)
+            localStorage.setItem('token-init-date', new Date().getTime())
+            dispatch(login({id,name,email}))
+        }
+
+        
+    }
+}
+
+export const startLogout = () => {
+
+    return (dispatch) => {
+
+        localStorage.clear()
+        dispatch(logout())
+    }
+}
+
+const notAuthenticated = () =>({type:types.authUnAuthenticated})
+
+const login = (user) => ({type:types.authLogin,payload:user})
+
+const logout = () => ({type:types.authLogout})

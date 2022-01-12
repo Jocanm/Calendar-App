@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import useFormData from '../../hooks/useFormData'
 import ButtonLoading from '../../components/ButtonLoading'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Input } from '../../components/Input'
 import { startLogin } from '../../redux/actions/auth'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,11 +12,11 @@ export const Login = () => {
 
     const dispatch = useDispatch()
     const { form, formData, updateFormData } = useFormData()
-    const {loading} = useSelector(state => state.ui)
+    const { loading } = useSelector(state => state.ui)
 
     const handleSubmitRegister = (e) => {
         e.preventDefault()
-        if(validateLogin(formData)){
+        if (validateLogin(formData)) {
             dispatch(startLogin(formData))
         }
     }
@@ -45,8 +45,8 @@ export const Login = () => {
                         size="small"
                     />
                 </div>
-                <ButtonLoading loading={loading} text="Submit" className="btn btn-primary bg-blue-600 btn-loading"/>
-                
+                <ButtonLoading disabled={Object.keys(formData).length === 0}  loading={loading} text="Submit" className="btn btn-primary bg-blue-600 btn-loading" />
+
                 <Link to="/auth/register" className="mt-2 text-blue-600 font-bold">
                     Register
                 </Link>
