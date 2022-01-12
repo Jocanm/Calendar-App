@@ -10,7 +10,7 @@ const ButtonLoading = ({ disabled, loading, text, className = "",children }) => 
         >
             {loading ? (
                 <div className="w-full h-full flex item-center justify-center">
-                    <ReactLoading type='spin' height={26} width={26} />
+                    <ReactLoading type='spin' height={24} width={26} />
                 </div>
             ) : text}
         </button>

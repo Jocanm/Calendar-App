@@ -5,3 +5,7 @@ export const uiOpenModal = () => {
 }
 
 export const uiCloseModal = () => ({type:types.uiCloseModal})
+
+export const uiFinishLoading = () => ({type:types.uiFinishLoading})
+
+export const uiStartLoading = () => ({type:types.uiStartLoading})

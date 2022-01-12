@@ -11,3 +11,7 @@
     border-radius:100%;
 }
 
+.btn-loading{
+    @apply disabled:bg-gray-300;
+}
+
