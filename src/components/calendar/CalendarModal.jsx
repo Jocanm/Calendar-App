@@ -4,11 +4,11 @@ import toast from 'react-hot-toast'
 import DateTimePicker from 'react-datetime-picker';
 import { Dialog } from '@mui/material';
 import { InputLabel } from '../Input';
-import { validateForm } from '../../helpers/validateForm';
-import { useSelector, useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../redux/actions/ui'
+import { validateForm } from '../../helpers/validateForm';
 import { useEffect, useState } from 'react';
-import { eventAddNew, eventCleanActiveNote, eventUpdate } from '../../redux/actions/events';
+import { useSelector, useDispatch } from 'react-redux';
+import { eventCleanActiveNote, eventStartAddNew, eventStartUpdate } from '../../redux/actions/events';
 import { DeleteButtonFab } from './DeleteButtonFab';
 
 const now = moment().minutes(0).seconds(0).add(1, "hours")
@@ -80,14 +80,10 @@ export const CalendarModal = () => {
             return;
         }
         if (activeEvent) {
-            dispatch(eventUpdate(formValues))
-            toast.success("Evento actualizado")
+            console.log("Esto va: ",formValues);
+            dispatch(eventStartUpdate(formValues))
         } else {
-            dispatch(eventAddNew({
-                ...formValues,
-                id: new Date().getTime()
-            }))
-            toast.success("Evento creado con exito")
+            dispatch(eventStartAddNew(formValues))
         }
         handleCloseModal()
     }
@@ -130,7 +126,6 @@ export const CalendarModal = () => {
                         />
                         <h3 className="text-xs -mt-1 mb-2">Descripcion breve</h3>
                         <textarea
-                            required
                             className="modal__custom-input"
                             type="text"
                             placeholder="Notas"

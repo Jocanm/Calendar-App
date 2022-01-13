@@ -6,10 +6,12 @@ export const types = {
     uiFinishLoading: '[UI] Finish Loading',
 
     eventSetActive: '[Event] Set Active',
+    eventStartAddNew: '[Event] Start Add New',
     eventAddNew: '[Event] Add New',
     eventCleanActiveNote: '[Event] Clean Active Note',
     eventUpdate: '[Event] Update',
     eventDeleted: '[Event] Delete event',
+    eventLoaded: '[Event] Load events',
 
     authUnAuthenticated:'[Auth] autenticion Finish',
     authStartLogin: '[Auth] Start Login',
